@@ -103,8 +103,8 @@ def predict_maintenance_cost(wattage_mw, duration_hr, year):
     return cost_per_kw_yr * wattage_mw * 1000
 
 # Example usage
-%wattage = 1.81  # in megawatts
-%duration = 1  # in hours
-%year = 2022  # prediction year
+#wattage = 1.81  # in megawatts
+#duration = 1  # in hours
+#year = 2022  # prediction year
 predicted_cost = predict_maintenance_cost(wattage, duration, year)
 print(f"Predicted Annual Fixed O&M Cost for {wattage}MW {duration}Hr in {year}: ${predicted_cost:,.2f}")
