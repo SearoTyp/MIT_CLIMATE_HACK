@@ -72,7 +72,7 @@ melted_data = melted_data.merge(wattage_data, left_on='DurationHr', right_on='Ho
 
 # Prepare the data for the regression model
 X = melted_data[['Year', 'DurationHr', 'Total Megawatt']]  # Features: Year, Duration, Wattage
-y = melted_data['CostPerMW']  # Target: Cost per MW
+y = melted_data['TotalCostPerMW']
 
 # Train a linear regression model
 model = LinearRegression()
@@ -89,20 +89,17 @@ def get_exact_cost(duration_hr, year, wattage_mw):
 
 # Define a function to predict the cost
 def predict_total_installed_cost(wattage_mw, duration_hr, year):
-    """
-    Predict the total installed cost based on wattage, storage duration, and year.
-    """
     exact_cost = get_exact_cost(duration_hr, year, wattage_mw)
     if exact_cost is not None:
         return exact_cost
     # Use regression model for values outside the dataset
     cost_per_mw = model.predict([[year, duration_hr, wattage_mw]])[0]
-    total_cost = cost_per_mw * wattage_mw
+    total_cost = cost_per_mw 
     return total_cost
 
 # Example usage
-#wattage = 3  # in megawatts
+#wattage = 10  # in megawatts
 #duration = 10  # in hours
-#year = 2030  # prediction year
+#year = 2025  # prediction year
 predicted_cost = predict_total_installed_cost(wattage, duration, year)
 print(f"Predicted Installed Cost for {wattage}MW {duration}Hr in {year}: ${predicted_cost:,.2f}")
